@@ -16,8 +16,8 @@ public class Words
 {
      private IWords _strategy;
 
-        // public string[] hosts = {"http://172.27.0.3:3000/", "http://172.27.0.2:3000/", "http://172.27.0.4:3000/"};
-        public string[] hosts = {"http://localhost:3000/"};
+        public string[] hosts = {"http://172.27.0.3:3000/", "http://172.27.0.2:3000/", "http://172.27.0.4:3000/"};
+        // public string[] hosts = {"http://localhost:3000/"};
 
         public Words()
         { }
