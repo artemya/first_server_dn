@@ -51,18 +51,26 @@ public class Words
         public string GetHeader(string host)
         {
             string word = "";
-            string header = "";
+            
             HttpWebRequest myReq = (HttpWebRequest)WebRequest.Create(host);
             HttpWebResponse myRes = (HttpWebResponse)myReq.GetResponse();
+
             using (StreamReader stream = new StreamReader(
-                myRes.GetResponseStream()))
-                {
-                    word = stream.ReadToEnd();
-                }
-                header = myRes.Headers["InCamp-Student"];
-                myRes.Close();
-            
+            myRes.GetResponseStream())) { word = stream.ReadToEnd(); }
+            myRes.Close();
 
             return word + "/*/" + host;
+        }
+
+        public string CreateSrt(string[] who, string[] how, string[] does, string[] what)
+        {
+            string result = "";
+            result += who[0] + " " + how[0] + " " + does[0] + " " + what[0] + "\n";
+
+            result += who[0] + " Gived from: " + who[1] + "\n";
+            result += how[0] + " Gived from: " + how[1] + "\n";
+            result += does[0] + " Gived from: " + does[1] + "\n";
+            result += what[0] + " Gived from: " + what[1] + "\n";
+            return result;
         }
 }

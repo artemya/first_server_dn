@@ -36,7 +36,8 @@ namespace first_server_dn
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            
+            var word = new Words();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -53,43 +54,42 @@ namespace first_server_dn
                 endpoints.MapGet("/who", async context =>
                 {
                     context.Response.ContentType = "text/html; charset=utf-8";
-                    // context.Response.Headers.Add("InCamp-Student", "ArtemYa");
-                    await context.Response.WriteAsync(RandElement(who));
+
+                    await context.Response.WriteAsync(word.RandomElement(who));
                 });
 
                 endpoints.MapGet("/how", async context =>
                 {
                     context.Response.ContentType = "text/html; charset=utf-8";
-                    // context.Response.Headers.Add("InCamp-Student", "ArtemYa");
-                    await context.Response.WriteAsync(RandElement(how));
+
+                    await context.Response.WriteAsync(word.RandomElement(how));
                 });
 
                 endpoints.MapGet("/does", async context =>
                 {
                     context.Response.ContentType = "text/html; charset=utf-8";
-                    // context.Response.Headers.Add("InCamp-Student", "ArtemYa");
-                    await context.Response.WriteAsync(RandElement(does));
+
+                    await context.Response.WriteAsync(word.RandomElement(does));
                 });
 
                 endpoints.MapGet("/what", async context =>
                 {
                     context.Response.ContentType = "text/html; charset=utf-8";
-                    // context.Response.Headers.Add("InCamp-Student", "ArtemYa");
-                    await context.Response.WriteAsync(RandElement(what));
+
+                    await context.Response.WriteAsync(word.RandomElement(what));
                 });
 
                 endpoints.MapGet("/quote", async context =>
                 {
                     context.Response.ContentType = "text/html; charset=utf-8";
-                    // context.Response.Headers.Add("InCamp-Student", "ArtemYa");
-                    await context.Response.WriteAsync($"{RandElement(who)} {RandElement(how)} {RandElement(does)} {RandElement(what)}");
+
+                    await context.Response.WriteAsync($"{word.RandomElement(who)} {word.RandomElement(how)} {word.RandomElement(does)} {word.RandomElement(what)}");
                 });
                 
                 endpoints.MapGet("/incamp18-quote", async context =>
                 {   
                     context.Response.ContentType = "text/html; charset=utf-8";
-                    // context.Response.Headers.Add("InCamp-Student", "ArtemYa");
-                    var word = new Words();
+                    
                     word.SetStrategy(new WithoutOptimization());
 
                     await context.Response.WriteAsync(word.GetHeaderInfoStrategy()); 
@@ -98,8 +98,7 @@ namespace first_server_dn
                 endpoints.MapGet("/incamp18-quote/optimization", async context =>
                 {   
                     context.Response.ContentType = "text/html; charset=utf-8";
-                    // context.Response.Headers.Add("InCamp-Student", "ArtemYa");
-                    var word = new Words();
+
                     word.SetStrategy(new WithOptimization());
 
                     await context.Response.WriteAsync(word.GetHeaderInfoStrategy().ToString()); 

@@ -19,12 +19,7 @@ public class WithoutOptimization : IWords
             string[] what = word.GetWord(word.RandomElement(hosts), "what");
 
             string result = "";
-            result += who[0] + " " + how[0] + " " + does[0] + " " + what[0] + "\n";
-
-            result += who[0] + " Gived from: " + who[1] + "\n";
-            result += how[0] + " Gived from: " + how[1] + "\n";
-            result += does[0] + " Gived from: " + does[1] + "\n";
-            result += what[0] + " Gived from: " + what[1] + "\n";
+            result +=  word.CreateSrt(who, how, does, what);
 
             ellapledTicks = DateTime.Now.Ticks - ellapledTicks;
             result += TimeSpan.FromTicks(ellapledTicks).TotalSeconds;
