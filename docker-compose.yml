@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  service1:
+    image: first_server
+    build: .
+    ports:
+    - 0.0.0.0:3000:3000
+
+  service2:
+    image: first_server
+    build: .
+    ports:
+    - 0.0.0.0:3030:3000
+
+  service3:
+    image: first_server
+    build: .
+    ports:
+    - 0.0.0.0:5000:3000
+
