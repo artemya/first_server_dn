@@ -1,4 +1,4 @@
-version: '3.4'
+version: '2.4'
 
 services:
   service1:
@@ -6,23 +6,25 @@ services:
     hostname: service1
     ports:
     - 3000:3000
-    networks:
-    - my-network
+    mem_limit: 50m
+    env_file:
+      - ./variable.env
+    
   service2:
     image: first_server
     hostname: service2
     ports:
     - 3030:3000
-    networks:
-    - my-network
+    mem_limit: 50m
+    env_file:
+      - ./variable.env
+
   service3:
     image: first_server   
     hostname: service3
     ports:
     - 5000:3000
-    networks:
-    - my-network
+    mem_limit: 50m
+    env_file:
+      - ./variable.env
 
-networks:
-  my-network:
-    external: true
