@@ -54,35 +54,35 @@ namespace first_server_dn
                 endpoints.MapGet("/who", async context =>
                 {
                     context.Response.ContentType = "text/html; charset=utf-8";
-
+                    context.Response.Headers.Add("InCamp-Student", Environment.GetEnvironmentVariable("HOSTNAME"));
                     await context.Response.WriteAsync(word.RandomElement(who));
                 });
 
                 endpoints.MapGet("/how", async context =>
                 {
                     context.Response.ContentType = "text/html; charset=utf-8";
-
+                    context.Response.Headers.Add("InCamp-Student", Environment.GetEnvironmentVariable("HOSTNAME"));
                     await context.Response.WriteAsync(word.RandomElement(how));
                 });
 
                 endpoints.MapGet("/does", async context =>
                 {
                     context.Response.ContentType = "text/html; charset=utf-8";
-
+                    context.Response.Headers.Add("InCamp-Student", Environment.GetEnvironmentVariable("HOSTNAME"));
                     await context.Response.WriteAsync(word.RandomElement(does));
                 });
 
                 endpoints.MapGet("/what", async context =>
                 {
                     context.Response.ContentType = "text/html; charset=utf-8";
-
+                    context.Response.Headers.Add("InCamp-Student", Environment.GetEnvironmentVariable("HOSTNAME"));
                     await context.Response.WriteAsync(word.RandomElement(what));
                 });
 
                 endpoints.MapGet("/quote", async context =>
                 {
                     context.Response.ContentType = "text/html; charset=utf-8";
-
+                    context.Response.Headers.Add("InCamp-Student", Environment.GetEnvironmentVariable("HOSTNAME"));
                     await context.Response.WriteAsync($"{word.RandomElement(who)} {word.RandomElement(how)} {word.RandomElement(does)} {word.RandomElement(what)}");
                 });
                 
@@ -101,7 +101,7 @@ namespace first_server_dn
 
                     word.SetStrategy(new WithOptimization());
 
-                    await context.Response.WriteAsync(word.GetHeaderInfoStrategy().ToString()); 
+                    await context.Response.WriteAsync(word.GetHeaderInfoStrategy()); 
                 });
 
             });

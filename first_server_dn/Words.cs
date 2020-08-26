@@ -16,7 +16,7 @@ public class Words
 {
      private IWords _strategy;
 
-        public string[] hosts = {"http://172.27.0.3:3000/", "http://172.27.0.2:3000/", "http://172.27.0.4:3000/"};
+        public string[] hosts = {"http://service1:3000/", "http://service2:3000/", "http://service3:3000/"};
         // public string[] hosts = {"http://localhost:3000/"};
 
         public Words()
@@ -39,38 +39,38 @@ public class Words
         public string RandomElement(string[] array)
         {
             var rand = new Random();
-            int randomElement = rand.Next(0, array.Length);
-            return array[randomElement];
+            return array[rand.Next(0, array.Length)];
         }
-        public string[] GetWord (string host, string word) {
-            string[] gottenWord = {};
-            string tempWho = GetHeader(host + word);
-            gottenWord = tempWho.Split("/*/");
-            return gottenWord;
+        public static Tuple<string, string> GetWord (string host, string word) {
+            
+            Tuple<string, string> words = GetHeader(host + word);
+            return words;
         }
-        public string GetHeader(string host)
+        public static Tuple<string, string> GetHeader(string host)
         {
             string word = "";
-            
+            string header = "";
+            Tuple<string, string> words;
             HttpWebRequest myReq = (HttpWebRequest)WebRequest.Create(host);
             HttpWebResponse myRes = (HttpWebResponse)myReq.GetResponse();
 
             using (StreamReader stream = new StreamReader(
             myRes.GetResponseStream())) { word = stream.ReadToEnd(); }
+            header = myRes.Headers["InCamp-Student"];
             myRes.Close();
 
-            return word + "/*/" + host;
+            words = new Tuple<string, string>(word, header);
+            return words;
         }
 
-        public string CreateSrt(string[] who, string[] how, string[] does, string[] what)
+        public static string CreateLine(Tuple<string, string> who, Tuple<string, string> how, Tuple<string, string> does, Tuple<string, string> what)
         {
             string result = "";
-            result += who[0] + " " + how[0] + " " + does[0] + " " + what[0] + "\n";
-
-            result += who[0] + " Gived from: " + who[1] + "\n";
-            result += how[0] + " Gived from: " + how[1] + "\n";
-            result += does[0] + " Gived from: " + does[1] + "\n";
-            result += what[0] + " Gived from: " + what[1] + "\n";
+            result += who.Item1 + " " + how.Item1 + " " + does.Item1 + " " + what.Item1 + "\n";
+            result += who.Item1 + " Gived from: " + who.Item2 + "\n";
+            result += how.Item1 + " Gived from: " + how.Item2 + "\n";
+            result += does.Item1 + " Gived from: " + does.Item2 + "\n";
+            result += what.Item1 + " Gived from: " + what.Item2 + "\n";
             return result;
         }
 }
