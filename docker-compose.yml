@@ -3,29 +3,26 @@ version: '3.4'
 services:
   service1:
     image: first_server
-    build:
-      context: .
+    hostname: service1
     ports:
-    - 0.0.0.0:3000:3000
+    - 3000:3000
     networks:
     - my-network
   service2:
     image: first_server
-    build:
-      context: .
+    hostname: service2
     ports:
-    - 0.0.0.0:3030:3000
+    - 3030:3000
     networks:
     - my-network
   service3:
-    image: first_server
-    build:
-      context: .
+    image: first_server   
+    hostname: service3
     ports:
-    - 0.0.0.0:5000:3000
+    - 5000:3000
     networks:
     - my-network
-      
+
 networks:
   my-network:
     external: true
