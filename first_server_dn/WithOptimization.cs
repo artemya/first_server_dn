@@ -13,19 +13,29 @@ public class WithOptimization : IWords
             long ellapledTicks = DateTime.Now.Ticks;
 
             var word = new Words();
+
             
-            string[] who = {}; 
-            string[] how = {};
-            string[] does = {};
-            string[] what = {};
-            who = await Task.Run(()=>word.GetWord(word.RandomElement(hosts), "who"));
-            how = await Task.Run(()=>word.GetWord(word.RandomElement(hosts), "how"));
-            does = await Task.Run(()=>word.GetWord(word.RandomElement(hosts), "does"));
-            what = await Task.Run(()=>word.GetWord(word.RandomElement(hosts), "what"));
+            Task<Tuple<string,string>> who = Task.Run(() =>
+            {
+                return Words.GetWord(word.RandomElement(hosts), "who");
+            });
+            Task<Tuple<string,string>> how = Task.Run(() =>
+            {
+                return Words.GetWord(word.RandomElement(hosts), "how");
+            });
+            Task<Tuple<string,string>> does = Task.Run(() =>
+            {
+                return Words.GetWord(word.RandomElement(hosts), "does");
+            });
+            Task<Tuple<string,string>> what = Task.Run(() =>
+            {
+                return Words.GetWord(word.RandomElement(hosts), "what");
+            });
+            await Task.WhenAll(who, how, does, what);
 
             string result = "";
 
-            result +=  word.CreateSrt(who, how, does, what);
+            result +=  Words.CreateLine(who.Result, how.Result, does.Result, what.Result);
             ellapledTicks = DateTime.Now.Ticks - ellapledTicks;
             result += TimeSpan.FromTicks(ellapledTicks).TotalSeconds;
 
