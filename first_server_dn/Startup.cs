@@ -30,10 +30,10 @@ namespace first_server_dn
         public string[] who = {"Шрек", "Осёл", "Кот в сапогах"};
         public string[] how = {"ужасно", "харизматично", "по дурацки"};
         public string[] does = {"рычит", "танцует", "бьет"};
-        public string[] what = {"танго", "людей", "код"};
+        public string[] what = {"танго", "код", "котлетку"};
 
         public static string hostLine = Environment.GetEnvironmentVariable("HOSTS");
-
+        public static string asyncMode = Environment.GetEnvironmentVariable("ASYNC");
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -91,20 +91,31 @@ namespace first_server_dn
                 endpoints.MapGet("/incamp18-quote", async context =>
                 {   
                     context.Response.ContentType = "text/html; charset=utf-8";
+                    // if(asyncMode != "True" && asyncMode != "true" && asyncMode != "false" && asyncMode != "False")
+                    // {
+                    //     asyncMode = "False";
+                    // }
                     
-                    word.SetStrategy(new WithoutOptimization());
-
-                    await context.Response.WriteAsync(word.GetHeaderInfoStrategy()); 
+                    if(Convert.ToBoolean((asyncMode)))
+                    {
+                        word.SetStrategy(new WithoutOptimization());
+                        await context.Response.WriteAsync(word.GetHeaderInfoStrategy() + "\nasync:"+ asyncMode); 
+                    }
+                    else 
+                    {
+                        word.SetStrategy(new WithOptimization());
+                        await context.Response.WriteAsync(word.GetHeaderInfoStrategy() + "\nasync:"+ asyncMode);
+                    }
                 });
 
-                endpoints.MapGet("/incamp18-quote/optimization", async context =>
-                {   
-                    context.Response.ContentType = "text/html; charset=utf-8";
+                // endpoints.MapGet("/incamp18-quote/optimization", async context =>
+                // {   
+                //     context.Response.ContentType = "text/html; charset=utf-8";
                     
-                    word.SetStrategy(new WithOptimization());
+                    // word.SetStrategy(new WithOptimization());
 
-                    await context.Response.WriteAsync(word.GetHeaderInfoStrategy()); 
-                });
+                    // await context.Response.WriteAsync(word.GetHeaderInfoStrategy()); 
+                // });
 
             });
         }

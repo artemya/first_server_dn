@@ -12,13 +12,13 @@ namespace first_server_dn
 
                 var word = new Words();
                 
-                Tuple<string, string> who = Words.GetWord(word.RandomElement(hosts), "who");            
+                Tuple<string, string> who = Words.GetWord(hosts[0], "who");            
 
-                Tuple<string, string> how = Words.GetWord(word.RandomElement(hosts), "how");
+                Tuple<string, string> how = Words.GetWord(hosts[1], "how");
 
-                Tuple<string, string> does = Words.GetWord(word.RandomElement(hosts), "does");
+                Tuple<string, string> does = Words.GetWord(hosts[2], "does");
 
-                Tuple<string, string> what = Words.GetWord(word.RandomElement(hosts), "what");
+                Tuple<string, string> what = Words.GetWord(hosts[3], "what");
 
                 string result = "";
                 result +=  Words.CreateLine(who, how, does, what);

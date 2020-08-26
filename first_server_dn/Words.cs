@@ -18,7 +18,6 @@ namespace first_server_dn
     {
         private IWords _strategy;
         
-        // public static string hostLine = Environment.GetEnvironmentVariable("hosts");
         // public string[] hosts = {"http://service1:3000/", "http://service2:3000/", "http://service3:3000/"};
         // public string[] hosts = {"http://localhost:3000/"};
 
@@ -38,16 +37,21 @@ namespace first_server_dn
         public string GetHeaderInfoStrategy() 
         {
             string[] hosts = Startup.hostLine.Split(" ");
-            return this._strategy.GetHeaderInfo(hosts);
+            List<string> useHosts = new List<string>();
+            for(int i = 0; i < 4; i++)
+            {
+                useHosts.Add(RandomElement(hosts));
+            }
+            return this._strategy.GetHeaderInfo(useHosts.ToArray());
         }
         public string RandomElement(string[] array)
         {
             var rand = new Random();
             return array[rand.Next(0, array.Length)];
         }
-        public static Tuple<string, string> GetWord (string host, string word) {
+        public static Tuple<string, string> GetWord(string host, string endpoint) {
             
-            Tuple<string, string> words = GetHeader(host + word);
+            Tuple<string, string> words = GetHeader(host + endpoint);
             return words;
         }
         public static Tuple<string, string> GetHeader(string host)
