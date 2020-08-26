@@ -16,8 +16,6 @@ namespace first_server_dn
 {
     public class Startup
     {
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
         }
@@ -34,6 +32,9 @@ namespace first_server_dn
         public string[] does = {"рычит", "танцует", "бьет"};
         public string[] what = {"танго", "людей", "код"};
 
+        public static string hostLine = Environment.GetEnvironmentVariable("HOSTS");
+
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             var word = new Words();
@@ -42,6 +43,7 @@ namespace first_server_dn
             {
                 app.UseDeveloperExceptionPage();
             }
+
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {  
@@ -49,7 +51,7 @@ namespace first_server_dn
                 {
                     context.Response.ContentType = "text/html; charset=utf-8";
                     context.Response.Headers.Add("InCamp-Student", "ArtemYa");
-                    await context.Response.WriteAsync("Hello");
+                    await context.Response.WriteAsync("Hello" + hostLine);
                 });
                 endpoints.MapGet("/who", async context =>
                 {
@@ -98,7 +100,7 @@ namespace first_server_dn
                 endpoints.MapGet("/incamp18-quote/optimization", async context =>
                 {   
                     context.Response.ContentType = "text/html; charset=utf-8";
-
+                    
                     word.SetStrategy(new WithOptimization());
 
                     await context.Response.WriteAsync(word.GetHeaderInfoStrategy()); 

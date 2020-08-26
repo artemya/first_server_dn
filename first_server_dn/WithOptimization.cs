@@ -1,8 +1,11 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-public class WithOptimization : IWords
+
+namespace first_server_dn
 {
+    public class WithOptimization : IWords
+    {
         public string GetHeaderInfo(string [] hosts)
         {
             return GetWordInfo(hosts).Result;
@@ -14,7 +17,6 @@ public class WithOptimization : IWords
 
             var word = new Words();
 
-            
             Task<Tuple<string,string>> who = Task.Run(() =>
             {
                 return Words.GetWord(word.RandomElement(hosts), "who");
@@ -37,8 +39,9 @@ public class WithOptimization : IWords
 
             result +=  Words.CreateLine(who.Result, how.Result, does.Result, what.Result);
             ellapledTicks = DateTime.Now.Ticks - ellapledTicks;
-            result += TimeSpan.FromTicks(ellapledTicks).TotalSeconds;
+            result += TimeSpan.FromTicks(ellapledTicks).TotalSeconds + " sec";
 
             return result;
         }
+    }
 }

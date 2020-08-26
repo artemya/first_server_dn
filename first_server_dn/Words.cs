@@ -12,11 +12,14 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-public class Words
+namespace first_server_dn
 {
-     private IWords _strategy;
-
-        public string[] hosts = {"http://service1:3000/", "http://service2:3000/", "http://service3:3000/"};
+    public class Words
+    {
+        private IWords _strategy;
+        
+        // public static string hostLine = Environment.GetEnvironmentVariable("hosts");
+        // public string[] hosts = {"http://service1:3000/", "http://service2:3000/", "http://service3:3000/"};
         // public string[] hosts = {"http://localhost:3000/"};
 
         public Words()
@@ -34,6 +37,7 @@ public class Words
         
         public string GetHeaderInfoStrategy() 
         {
+            string[] hosts = Startup.hostLine.Split(" ");
             return this._strategy.GetHeaderInfo(hosts);
         }
         public string RandomElement(string[] array)
@@ -73,4 +77,5 @@ public class Words
             result += what.Item1 + " Gived from: " + what.Item2 + "\n";
             return result;
         }
+    }
 }
